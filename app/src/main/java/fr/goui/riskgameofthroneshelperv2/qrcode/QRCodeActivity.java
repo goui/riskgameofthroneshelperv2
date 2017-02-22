@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.adapter.TerritoryAdapter;
+import fr.goui.riskgameofthroneshelperv2.map.MapActivity;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
@@ -107,7 +108,8 @@ public class QRCodeActivity extends AppCompatActivity implements IQRCodeView {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int which) {
-                            // TODO start map activity
+                            // TODO
+                            startActivity(MapActivity.getStartingIntent(QRCodeActivity.this));
                         }
                     })
                     .setNegativeButton("Cancel", null)

@@ -18,7 +18,8 @@
         <activity
             android:name=".qrcode.QRCodeActivity"
             android:label="@string/title_activity_qrcode"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".map.MapActivity"></activity>
     </application>
 
 </manifest>
