@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Risk: Game of Thrones helper v2</string>
     <string name="Number_of_players">Number of players</string>
+    <string name="Start_game_qm">Are you sure you want to start the game?</string>
+    <string name="Start_game_caution">You won\'t be able to add a new player or change a player\'s color</string>
+
+    <!-- Menu -->
+    <string name="Next">Next</string>
 </resources>
