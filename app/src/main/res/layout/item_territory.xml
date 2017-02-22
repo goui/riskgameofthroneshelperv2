@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/item_territory_discard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:contentDescription="@string/Discard"
+        android:padding="8dp"
+        android:src="@drawable/ic_discard" />
+
+    <TextView
+        android:id="@+id/territory_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:layout_toLeftOf="@id/item_territory_discard"
+        android:gravity="center|left"
+        android:padding="4dp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="3.0"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        tools:text="Pyke" />
+
+</RelativeLayout>

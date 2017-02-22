@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.Utils;
+import fr.goui.riskgameofthroneshelperv2.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
+import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 public class QRCodeActivity extends AppCompatActivity {
 
@@ -34,10 +38,12 @@ public class QRCodeActivity extends AppCompatActivity {
     @BindView(R.id.content_qrcode)
     LinearLayout mLayout;
 
-    @BindView(R.id.text_view)
-    TextView mTextView;
+    @BindView(R.id.territory_recycler_view)
+    RecyclerView mRecyclerView;
 
     private PlayerModel mPlayerModel;
+
+    private TerritoryAdapter mTerritoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,11 @@ public class QRCodeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
+        mTerritoryAdapter = new TerritoryAdapter(this);
+        mRecyclerView.setAdapter(mTerritoryAdapter);
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +75,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
-            mTextView.setText(scanResult.getContents());
+            mTerritoryAdapter.addTerritory(new Territory(scanResult.getContents()));
         }
     }
 
