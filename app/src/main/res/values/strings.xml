@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Risk: Game of Thrones helper v2</string>
+    <string name="Number_of_players">Number of players</string>
 </resources>
