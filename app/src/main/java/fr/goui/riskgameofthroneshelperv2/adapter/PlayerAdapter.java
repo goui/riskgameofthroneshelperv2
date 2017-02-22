@@ -13,7 +13,6 @@ import java.util.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
-import fr.goui.riskgameofthroneshelperv2.Utils;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 
@@ -22,8 +21,6 @@ import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
  */
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> implements Observer {
 
-    private Context mContext;
-
     private LayoutInflater mLayoutInflater;
 
     private List<Player> mListOfPlayers;
@@ -31,7 +28,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     private PlayerModel mPlayerModel = PlayerModel.getInstance();
 
     public PlayerAdapter(Context context) {
-        mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mListOfPlayers = PlayerModel.getInstance().getPlayers();
         mPlayerModel.addObserver(this);
@@ -46,13 +42,12 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     public void onBindViewHolder(final PlayerViewHolder holder, int position) {
         final Player player = mListOfPlayers.get(position);
         if (player != null) {
-            holder.playerView.setBackgroundColor(Utils.getColorFromIndex(mContext, player.getColorIndex()));
+            holder.playerView.setBackgroundColor(player.getColor());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListOfPlayers.size() < 7) { // preventing picking color when max players
-                        int oldColorIndex = player.getColorIndex();
-                        holder.playerView.setBackgroundColor(Utils.getColorFromIndex(mContext, mPlayerModel.getNextAvailableColorIndex(player)));
+                        holder.playerView.setBackgroundColor(mPlayerModel.getNextAvailableColor(player));
                     }
                 }
             });

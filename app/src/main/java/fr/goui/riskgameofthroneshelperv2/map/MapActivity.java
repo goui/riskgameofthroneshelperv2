@@ -33,7 +33,7 @@ public class MapActivity extends AppCompatActivity {
             TextView playerTroopsTextView = (TextView) getLayoutInflater().inflate(R.layout.player_troops_text_view, null);
             playerTroopsTextView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
             playerTroopsTextView.setText("" + 5); // TODO troops here
-            playerTroopsTextView.setBackgroundColor(Utils.getColorFromIndex(this, player.getColorIndex()));
+            playerTroopsTextView.setBackgroundColor(player.getColor());
             mPlayersLayout.addView(playerTroopsTextView);
         }
     }

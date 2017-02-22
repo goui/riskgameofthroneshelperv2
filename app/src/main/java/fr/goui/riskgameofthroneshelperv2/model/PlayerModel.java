@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
+import fr.goui.riskgameofthroneshelperv2.Utils;
+
 /**
  * Singleton class managing players.
  */
@@ -38,18 +40,19 @@ public class PlayerModel extends Observable {
 
     public void addPlayer() {
         // picking the first available color
-        int colorIndex = 0;
-        for (int i = 0; i < 7; i++) {
-            if (!pickedColors.contains(i)) {
-                colorIndex = i;
+        int color = 0;
+        int[] colors = Utils.getInstance().getColorsArray();
+        for (int currentColor : colors) {
+            if (!pickedColors.contains(currentColor)) {
+                color = currentColor;
                 break; // sorry Cyril
             }
         }
         // creating the new player
         Player player = new Player();
-        player.setColorIndex(colorIndex);
+        player.setColor(color);
         players.add(player);
-        pickedColors.add(colorIndex);
+        pickedColors.add(color);
         // notifying observers
         setChanged();
         notifyObservers();
@@ -59,33 +62,43 @@ public class PlayerModel extends Observable {
         // removing the last player
         Player player = players.get(players.size() - 1);
         players.remove(player);
-        pickedColors.remove(player.getColorIndex());
+        pickedColors.remove(player.getColor());
         // notifying observers
         setChanged();
         notifyObservers();
     }
 
     /**
-     * Picks next available color for a specific player.
+     * Picks the next available color for a specific player.
      *
      * @param player the selected player
-     * @return the new color index
+     * @return the new color resource id
      */
-    public int getNextAvailableColorIndex(Player player) {
+    public int getNextAvailableColor(Player player) {
+        // getting current color index
+        int color = player.getColor();
+        int[] colors = Utils.getInstance().getColorsArray();
+        int colorIndex = 0;
+        for (int i = 0; i < colors.length; i++) {
+            int currentColor = colors[i];
+            if (currentColor == color) {
+                colorIndex = i;
+            }
+        }
         // picking next available color
-        int colorIndex = player.getColorIndex();
         do {
             colorIndex++;
             if (colorIndex > 6) {
                 colorIndex = 0;
             }
-        } while (pickedColors.contains(colorIndex));
+            color = colors[colorIndex];
+        } while (pickedColors.contains(color));
         // updating picked colors
-        pickedColors.remove(player.getColorIndex());
-        pickedColors.add(colorIndex);
+        pickedColors.remove(player.getColor());
+        pickedColors.add(color);
         // updating player color index
-        player.setColorIndex(colorIndex);
-        return colorIndex;
+        player.setColor(color);
+        return color;
     }
 
     public Set<Integer> getPickedColors() {
@@ -95,13 +108,13 @@ public class PlayerModel extends Observable {
     /**
      * Finds a player by his color index.
      *
-     * @param colorIndex color index
-     * @return the player with provided color index
+     * @param colorId the color resource id
+     * @return the player with provided color
      */
-    public Player findPlayerByColorIndex(int colorIndex) {
+    public Player findPlayerByColor(int colorId) {
         Player player = null;
         for (Player currentPlayer : players) {
-            if (currentPlayer.getColorIndex() == colorIndex) {
+            if (currentPlayer.getColor() == colorId) {
                 player = currentPlayer;
             }
         }

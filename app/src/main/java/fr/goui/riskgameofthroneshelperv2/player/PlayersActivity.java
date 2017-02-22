@@ -39,13 +39,13 @@ public class PlayersActivity extends AppCompatActivity implements IPlayerView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players);
         ButterKnife.bind(this);
+        // creating the presenter
+        mPresenter = new PlayerPresenter();
+        mPresenter.attachView(this);
         // setting up the recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(new PlayerAdapter(this));
-        // creating the presenter
-        mPresenter = new PlayerPresenter();
-        mPresenter.attachView(this);
     }
 
     @Override

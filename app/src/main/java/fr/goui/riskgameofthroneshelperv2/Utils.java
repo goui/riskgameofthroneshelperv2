@@ -10,52 +10,57 @@ import java.util.Set;
  */
 public class Utils {
 
-    /**
-     * Gets a color resource id from the color index in the player_color xml.
-     *
-     * @param context    the context
-     * @param colorIndex the color index
-     * @return the color's resource id
-     */
-    public static int getColorFromIndex(Context context, int colorIndex) {
-        TypedArray ta = context.getResources().obtainTypedArray(R.array.player_color);
-        int color = ta.getColor(colorIndex, -1);
-        ta.recycle();
-        return color;
+    public static final int MIN_PLAYERS = 2;
+    public static final int MAX_PLAYERS = 7;
+
+    private int[] colors;
+
+    private static Utils instance;
+
+    private Utils() {
+        colors = new int[7];
+    }
+
+    public static Utils getInstance() {
+        if (instance == null) {
+            instance = new Utils();
+        }
+        return instance;
     }
 
     /**
-     * Gets a color index from the color resource id in the player_color xml.
+     * Initializes the colors array with values in the player_color xml resource.
      *
      * @param context the context
-     * @param colorId the color resource id
-     * @return the color index
      */
-    public static int getIndexFromColor(Context context, int colorId) {
+    public void initColorsArray(Context context) {
         TypedArray ta = context.getResources().obtainTypedArray(R.array.player_color);
-        int colorIndex = 0;
-        for (int i = 0; i < ta.length(); i++) {
-            int currentColorId = ta.getColor(i, -1);
-            if (currentColorId == colorId) {
-                colorIndex = i;
-            }
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ta.getColor(i, -1);
         }
         ta.recycle();
-        return colorIndex;
+    }
+
+    /**
+     * Gets the colors array.
+     *
+     * @return the colors array
+     */
+    public int[] getColorsArray() {
+        return colors;
     }
 
     /**
      * Converts a set of integers to a int array.
      *
-     * @param context  the context
      * @param colorSet the color set
      * @return the integer array
      */
-    public static int[] convertColorSet(Context context, Set<Integer> colorSet) {
+    public static int[] convertColorSet(Set<Integer> colorSet) {
         int[] colors = new int[colorSet.size()];
         int counter = 0;
         for (int color : colorSet) {
-            colors[counter] = getColorFromIndex(context, color);
+            colors[counter] = color;
             counter++;
         }
         return colors;

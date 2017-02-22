@@ -8,7 +8,10 @@ import java.util.List;
  */
 public class Player {
 
-    private int colorIndex;
+    /**
+     * Android color resource id.
+     */
+    private int color;
 
     private List<Territory> territories;
 
@@ -16,12 +19,12 @@ public class Player {
         territories = new ArrayList<>();
     }
 
-    public int getColorIndex() {
-        return colorIndex;
+    public int getColor() {
+        return color;
     }
 
-    public void setColorIndex(int colorIndex) {
-        this.colorIndex = colorIndex;
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public List<Territory> getTerritories() {

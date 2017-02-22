@@ -1,24 +1,32 @@
 package fr.goui.riskgameofthroneshelperv2.player;
 
+import fr.goui.riskgameofthroneshelperv2.Utils;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
+
+import static fr.goui.riskgameofthroneshelperv2.Utils.MAX_PLAYERS;
+import static fr.goui.riskgameofthroneshelperv2.Utils.MIN_PLAYERS;
 
 /**
  * Presenter for a player.
  */
 class PlayerPresenter implements IPlayerPresenter {
 
-    private static final int MIN_PLAYERS = 2;
-    private static final int MAX_PLAYERS = 7;
-
     private IPlayerView mView;
 
-    private PlayerModel mPlayerModel = PlayerModel.getInstance();
+    private PlayerModel mPlayerModel;
 
-    private int mNumberOfPlayers = MIN_PLAYERS;
+    private int mNumberOfPlayers;
 
     @Override
     public void attachView(IPlayerView view) {
         mView = view;
+        init();
+    }
+
+    private void init() {
+        Utils.getInstance().initColorsArray(mView.getContext());
+        mPlayerModel = PlayerModel.getInstance();
+        mNumberOfPlayers = MIN_PLAYERS;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class QRCodePresenter implements IQRCodePresenter {
     private void init() {
         mPlayerModel = PlayerModel.getInstance();
         mSelectedPlayer = mPlayerModel.getPlayers().get(0);
-        mView.changeBackgroundColor(Utils.getColorFromIndex(mView.getContext(), mSelectedPlayer.getColorIndex()));
+        mView.changeBackgroundColor(mSelectedPlayer.getColor());
     }
 
     @Override
@@ -41,16 +41,15 @@ public class QRCodePresenter implements IQRCodePresenter {
     @Override
     public void onPlayerSelectClick() {
         // getting picked colors
-        int[] colors = Utils.convertColorSet(mView.getContext(), mPlayerModel.getPickedColors());
+        int[] colors = Utils.convertColorSet(mPlayerModel.getPickedColors());
         // getting the color of the current player
-        int selectedColor = Utils.getColorFromIndex(mView.getContext(), mSelectedPlayer.getColorIndex());
+        int selectedColor = mSelectedPlayer.getColor();
         // opening the color picker
         mView.openColorPicker(colors, selectedColor, new ColorPickerSwatch.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
                 // changing the selected player
-                int colorIndex = Utils.getIndexFromColor(mView.getContext(), color);
-                mSelectedPlayer = mPlayerModel.findPlayerByColorIndex(colorIndex);
+                mSelectedPlayer = mPlayerModel.findPlayerByColor(color);
                 // changing the background color and the list of territories
                 mView.changeBackgroundColor(color);
                 mView.updateDisplayedList(mSelectedPlayer.getTerritories());

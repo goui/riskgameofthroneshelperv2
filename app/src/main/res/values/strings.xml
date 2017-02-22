@@ -8,6 +8,6 @@
     <string name="Select_player">Select player</string>
     <string name="Start">Start</string>
     <string name="Start_game_qm">Are you sure you want to start the game?</string>
-    <string name="Start_game_caution">You won\'t be able to add a new player or change a player\'s color</string>
+    <string name="Start_game_caution">You\'ll still be able to change territories color on the next screen</string>
     <string name="title_activity_qrcode">QRCodeActivity</string>
 </resources>
