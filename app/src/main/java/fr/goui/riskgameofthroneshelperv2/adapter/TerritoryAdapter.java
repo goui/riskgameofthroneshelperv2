@@ -50,8 +50,8 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
         }
     }
 
-    public void addTerritory(Territory territory) {
-        mListOfTerritories.add(territory);
+    public void setTerritoryList(List<Territory> territories) {
+        mListOfTerritories = territories;
         notifyDataSetChanged();
     }
 

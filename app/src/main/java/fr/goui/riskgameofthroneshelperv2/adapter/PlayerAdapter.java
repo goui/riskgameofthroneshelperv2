@@ -46,13 +46,13 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     public void onBindViewHolder(final PlayerViewHolder holder, int position) {
         final Player player = mListOfPlayers.get(position);
         if (player != null) {
-            holder.playerView.setBackgroundColor(Utils.getColor(mContext, player.getColorIndex()));
+            holder.playerView.setBackgroundColor(Utils.getColorFromIndex(mContext, player.getColorIndex()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListOfPlayers.size() < 7) { // preventing picking color when max players
                         int oldColorIndex = player.getColorIndex();
-                        holder.playerView.setBackgroundColor(Utils.getColor(mContext, mPlayerModel.getNextAvailableColorIndex(player)));
+                        holder.playerView.setBackgroundColor(Utils.getColorFromIndex(mContext, mPlayerModel.getNextAvailableColorIndex(player)));
                     }
                 }
             });

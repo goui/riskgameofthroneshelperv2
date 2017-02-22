@@ -14,20 +14,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.colorpicker.ColorPickerDialog;
+import com.android.colorpicker.ColorPickerSwatch;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
-import fr.goui.riskgameofthroneshelperv2.Utils;
 import fr.goui.riskgameofthroneshelperv2.adapter.TerritoryAdapter;
-import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
-public class QRCodeActivity extends AppCompatActivity {
+/**
+ * View for the qrcode scanning and territories adding.
+ */
+public class QRCodeActivity extends AppCompatActivity implements IQRCodeView {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -41,41 +46,47 @@ public class QRCodeActivity extends AppCompatActivity {
     @BindView(R.id.territory_recycler_view)
     RecyclerView mRecyclerView;
 
-    private PlayerModel mPlayerModel;
-
+    /**
+     * Adapter for the list of territories.
+     */
     private TerritoryAdapter mTerritoryAdapter;
+
+    /**
+     * Presenter associated with this view.
+     */
+    private IQRCodePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
         ButterKnife.bind(this);
-
+        // setting custom tool bars
         setSupportActionBar(mToolbar);
-
+        // setting up the recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
         mTerritoryAdapter = new TerritoryAdapter(this);
         mRecyclerView.setAdapter(mTerritoryAdapter);
-
+        // qrcode scan floating action button click listener
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new IntentIntegrator(QRCodeActivity.this).initiateScan();
             }
         });
-
-        mPlayerModel = PlayerModel.getInstance();
-        mLayout.setBackgroundColor(Utils.getColor(this, mPlayerModel.getPlayers().get(0).getColorIndex()));
+        // creating the presenter
+        mPresenter = new QRCodePresenter();
+        mPresenter.attachView(this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
+        // getting scan result
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
-            mTerritoryAdapter.addTerritory(new Territory(scanResult.getContents()));
+            mPresenter.onScanSuccess(scanResult.getContents());
         }
     }
 
@@ -89,12 +100,13 @@ public class QRCodeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_start) {
+            // opening a dialog to ask if the user wants to continue
             new AlertDialog.Builder(QRCodeActivity.this)
                     .setTitle(R.string.Start_game_qm)
                     .setMessage(R.string.Start_game_caution)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int wich) {
+                        public void onClick(DialogInterface dialogInterface, int which) {
                             // TODO start map activity
                         }
                     })
@@ -102,11 +114,60 @@ public class QRCodeActivity extends AppCompatActivity {
                     .show();
         }
         if (id == R.id.action_select_player) {
-            // TODO open color picker with available colors
+            mPresenter.onPlayerSelectClick();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void showProgressBar() {
+        // nothing to do
+    }
+
+    @Override
+    public void hideProgressBar() {
+        // nothing to do
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void changeBackgroundColor(int colorId) {
+        mLayout.setBackgroundColor(colorId);
+    }
+
+    @Override
+    public void openColorPicker(int[] colors, int selectedColor, ColorPickerSwatch.OnColorSelectedListener colorSelectListener) {
+        ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
+        colorPickerDialog.initialize(
+                R.string.Select_player,
+                colors,
+                selectedColor,
+                colors.length / 2,
+                colors.length);
+        colorPickerDialog.setOnColorSelectedListener(colorSelectListener);
+        colorPickerDialog.show(getFragmentManager(), null);
+    }
+
+    @Override
+    public void updateDisplayedList(List<Territory> territories) {
+        mTerritoryAdapter.setTerritoryList(territories);
+    }
+
+    /**
+     * Gets the intent needed to navigate to this activity.
+     *
+     * @param callingContext the calling context
+     * @return the intent needed
+     */
     public static Intent getStartingIntent(Context callingContext) {
         return new Intent(callingContext, QRCodeActivity.class);
     }
