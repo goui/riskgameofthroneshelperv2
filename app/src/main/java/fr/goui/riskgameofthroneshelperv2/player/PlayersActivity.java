@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.adapter.PlayerAdapter;
-import fr.goui.riskgameofthroneshelperv2.model.Player;
+import fr.goui.riskgameofthroneshelperv2.qrcode.QRCodeActivity;
 
 public class PlayersActivity extends AppCompatActivity implements IPlayerView {
 
@@ -32,8 +32,6 @@ public class PlayersActivity extends AppCompatActivity implements IPlayerView {
     @BindView(R.id.player_recycler_view)
     RecyclerView mRecyclerView;
 
-    private PlayerAdapter mPlayerAdapter;
-
     private IPlayerPresenter mPresenter;
 
     @Override
@@ -44,8 +42,7 @@ public class PlayersActivity extends AppCompatActivity implements IPlayerView {
         // setting up the recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        mPlayerAdapter = new PlayerAdapter(this);
-        mRecyclerView.setAdapter(mPlayerAdapter);
+        mRecyclerView.setAdapter(new PlayerAdapter(this));
         // creating the presenter
         mPresenter = new PlayerPresenter();
         mPresenter.attachView(this);
@@ -62,13 +59,13 @@ public class PlayersActivity extends AppCompatActivity implements IPlayerView {
         int id = item.getItemId();
         if (id == R.id.action_next) {
             new AlertDialog.Builder(PlayersActivity.this)
-                    .setTitle(R.string.Start_game_qm)
-                    .setMessage(R.string.Start_game_caution)
+                    .setTitle(R.string.Continue_qm)
+                    .setMessage(R.string.Continue_caution)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int wich) {
                             // TODO get map
-                            // TODO start qrcode reader activity
+                            startActivity(QRCodeActivity.getStartingIntent(PlayersActivity.this));
                         }
                     })
                     .setNegativeButton("Cancel", null)

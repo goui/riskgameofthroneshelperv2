@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_select_player"
+        android:icon="@drawable/ic_people"
+        android:title="@string/Select_player"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_start"
+        android:icon="@drawable/ic_navigate_next"
+        android:title="@string/Start"
+        app:showAsAction="always" />
+</menu>

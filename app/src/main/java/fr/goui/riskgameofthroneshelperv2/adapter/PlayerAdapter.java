@@ -1,7 +1,6 @@
 package fr.goui.riskgameofthroneshelperv2.adapter;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import java.util.Observer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
+import fr.goui.riskgameofthroneshelperv2.Utils;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 
@@ -46,30 +46,17 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     public void onBindViewHolder(final PlayerViewHolder holder, int position) {
         final Player player = mListOfPlayers.get(position);
         if (player != null) {
-            holder.playerView.setBackgroundColor(getColor(player.getColorIndex()));
+            holder.playerView.setBackgroundColor(Utils.getColor(mContext, player.getColorIndex()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListOfPlayers.size() < 7) { // preventing picking color when max players
                         int oldColorIndex = player.getColorIndex();
-                        holder.playerView.setBackgroundColor(getColor(mPlayerModel.getNextAvailableColorIndex(player)));
+                        holder.playerView.setBackgroundColor(Utils.getColor(mContext, mPlayerModel.getNextAvailableColorIndex(player)));
                     }
                 }
             });
         }
-    }
-
-    /**
-     * Gets a color from the player_color xml resource.
-     *
-     * @param position the color position
-     * @return the color's resource id
-     */
-    private int getColor(int position) {
-        TypedArray ta = mContext.getResources().obtainTypedArray(R.array.player_color);
-        int color = ta.getColor(position, -1);
-        ta.recycle();
-        return color;
     }
 
     @Override
