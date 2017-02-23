@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelperv2.map.MapActivity;
+import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
@@ -108,7 +109,6 @@ public class QRCodeActivity extends AppCompatActivity implements IQRCodeView {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int which) {
-                            // TODO
                             startActivity(MapActivity.getStartingIntent(QRCodeActivity.this));
                         }
                     })
@@ -160,8 +160,20 @@ public class QRCodeActivity extends AppCompatActivity implements IQRCodeView {
     }
 
     @Override
-    public void updateDisplayedList(List<Territory> territories) {
-        mTerritoryAdapter.setTerritoryList(territories);
+    public void updateDisplayedList() {
+        mTerritoryAdapter.notifyItemInserted(mTerritoryAdapter.getItemCount());
+    }
+
+    @Override
+    public void changePlayer(Player player) {
+        mTerritoryAdapter.setPlayer(player);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.detachView();
+        mPresenter = null;
+        super.onDestroy();
     }
 
     /**

@@ -64,8 +64,7 @@ public class PlayersActivity extends AppCompatActivity implements IPlayerView {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int wich) {
-                            // TODO get map
-                            startActivity(QRCodeActivity.getStartingIntent(PlayersActivity.this));
+                            mPresenter.loadMaps();
                         }
                     })
                     .setNegativeButton("Cancel", null)
@@ -107,5 +106,17 @@ public class PlayersActivity extends AppCompatActivity implements IPlayerView {
     @Override
     public void setNumberOfPlayers(String numberOfPlayers) {
         mNumberOfPlayersTextView.setText(numberOfPlayers);
+    }
+
+    @Override
+    public void startQRCodeActivity() {
+        startActivity(QRCodeActivity.getStartingIntent(PlayersActivity.this));
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.detachView();
+        mPresenter = null;
+        super.onDestroy();
     }
 }

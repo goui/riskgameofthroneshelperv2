@@ -5,6 +5,7 @@ import com.android.colorpicker.ColorPickerSwatch;
 import java.util.List;
 
 import fr.goui.riskgameofthroneshelperv2.IView;
+import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
@@ -29,9 +30,14 @@ interface IQRCodeView extends IView {
     void openColorPicker(int[] colors, int selectedColor, ColorPickerSwatch.OnColorSelectedListener colorSelectListener);
 
     /**
-     * Changes the displayed list of territories.
+     * Changes the current player.
      *
-     * @param territories the list of territories
+     * @param player the new player
      */
-    void updateDisplayedList(List<Territory> territories);
+    void changePlayer(Player player);
+
+    /**
+     * Notifies the displayed list of territories has changed.
+     */
+    void updateDisplayedList();
 }

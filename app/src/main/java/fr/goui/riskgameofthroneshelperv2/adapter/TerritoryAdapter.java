@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
+import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
@@ -24,6 +25,8 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
     private LayoutInflater mLayoutInflater;
 
     private List<Territory> mListOfTerritories;
+
+    private Player mPlayer;
 
     public TerritoryAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -50,8 +53,9 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
         }
     }
 
-    public void setTerritoryList(List<Territory> territories) {
-        mListOfTerritories = territories;
+    public void setPlayer(Player player) {
+        mPlayer = player;
+        mListOfTerritories = mPlayer.getTerritories();
         notifyDataSetChanged();
     }
 

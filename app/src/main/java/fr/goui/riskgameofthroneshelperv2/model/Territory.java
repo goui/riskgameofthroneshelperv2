@@ -13,9 +13,9 @@ public class Territory {
 
     private int port;
 
-    private int color;
-
     private List<Coordinates> coordinates;
+
+    private int color;
 
     public Territory(String name) {
         this.name = name;
@@ -45,19 +45,19 @@ public class Territory {
         this.port = port;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
-
     public List<Coordinates> getCoordinates() {
         return coordinates;
     }
 
     public void setCoordinates(List<Coordinates> coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

@@ -8,4 +8,6 @@ import fr.goui.riskgameofthroneshelperv2.IView;
 interface IPlayerView extends IView {
 
     void setNumberOfPlayers(String numberOfPlayers);
+
+    void startQRCodeActivity();
 }

@@ -10,4 +10,6 @@ interface IPlayerPresenter extends IPresenter<IPlayerView> {
     void onMinusClick();
 
     void onPlusClick();
+
+    void loadMaps();
 }

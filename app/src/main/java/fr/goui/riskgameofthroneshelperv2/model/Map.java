@@ -9,11 +9,11 @@ public class Map {
 
     private String name;
 
-    private List<Region> regions;
-
     private int width;
 
     private int height;
+
+    private List<Region> regions;
 
     public String getName() {
         return name;
@@ -21,14 +21,6 @@ public class Map {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Region> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(List<Region> regions) {
-        this.regions = regions;
     }
 
     public int getWidth() {
@@ -45,5 +37,13 @@ public class Map {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public List<Region> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(List<Region> regions) {
+        this.regions = regions;
     }
 }
