@@ -26,8 +26,6 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
 
     private List<Territory> mListOfTerritories;
 
-    private Player mPlayer;
-
     public TerritoryAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mListOfTerritories = new ArrayList<>();
@@ -54,8 +52,7 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
     }
 
     public void setPlayer(Player player) {
-        mPlayer = player;
-        mListOfTerritories = mPlayer.getTerritories();
+        mListOfTerritories = player.getTerritories();
         notifyDataSetChanged();
     }
 

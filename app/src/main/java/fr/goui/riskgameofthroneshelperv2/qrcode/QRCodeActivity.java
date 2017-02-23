@@ -21,15 +21,12 @@ import com.android.colorpicker.ColorPickerSwatch;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelperv2.map.MapActivity;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
-import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
  * View for the qrcode scanning and territories adding.

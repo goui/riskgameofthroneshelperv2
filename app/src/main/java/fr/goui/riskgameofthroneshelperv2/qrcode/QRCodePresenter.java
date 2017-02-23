@@ -12,7 +12,7 @@ import fr.goui.riskgameofthroneshelperv2.model.Territory;
 /**
  * Presenter for the qrcode screen.
  */
-public class QRCodePresenter implements IQRCodePresenter {
+class QRCodePresenter implements IQRCodePresenter {
 
     private IQRCodeView mView;
 

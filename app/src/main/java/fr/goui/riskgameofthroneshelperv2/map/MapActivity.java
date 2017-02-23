@@ -11,7 +11,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
-import fr.goui.riskgameofthroneshelperv2.Utils;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 

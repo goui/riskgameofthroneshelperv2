@@ -2,11 +2,8 @@ package fr.goui.riskgameofthroneshelperv2.qrcode;
 
 import com.android.colorpicker.ColorPickerSwatch;
 
-import java.util.List;
-
 import fr.goui.riskgameofthroneshelperv2.IView;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
-import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
  * View interface for the qrcode screen.
