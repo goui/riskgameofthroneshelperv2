@@ -13,6 +13,8 @@ public class MapModel {
 
     private Map westeros;
 
+    private Map essos;
+
     private Map currentMap;
 
     private MapModel() {
@@ -33,6 +35,14 @@ public class MapModel {
         this.westeros = westeros;
     }
 
+    public Map getEssos() {
+        return essos;
+    }
+
+    public void setEssos(Map essos) {
+        this.essos = essos;
+    }
+
     public Map getCurrentMap() {
         return currentMap;
     }
@@ -40,7 +50,7 @@ public class MapModel {
     public void setCurrentMap(MapId mapId) {
         switch (mapId) {
             case ESSOS:
-//                currentMap = essos; TODO
+                currentMap = essos;
                 break;
             case WESTEROS:
                 currentMap = westeros;

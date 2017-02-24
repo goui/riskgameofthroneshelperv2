@@ -49,7 +49,7 @@ public class MapView extends View {
         mMapWidth = mMap.getWidth();
         mMapHeight = mMap.getHeight();
         mBorderPaint = new Paint();
-        mBorderPaint.setColor(ContextCompat.getColor(context, android.R.color.white));
+        mBorderPaint.setColor(ContextCompat.getColor(context, android.R.color.darker_gray));
         mBorderPaint.setStrokeWidth(2);
         mBorderPaint.setStyle(Paint.Style.STROKE);
         mBorderPaint.setAntiAlias(true);

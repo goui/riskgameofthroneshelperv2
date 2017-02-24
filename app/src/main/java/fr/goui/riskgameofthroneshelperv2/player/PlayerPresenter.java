@@ -121,7 +121,7 @@ class PlayerPresenter implements IPlayerPresenter {
             @Override
             public void call(Subscriber subscriber) {
                 subscriber.onNext(getWesterosMap());
-//  TODO        subscriber.onNext(getEssosMap());
+                subscriber.onNext(getEssosMap());
                 subscriber.onCompleted();
             }
         })
@@ -140,6 +140,19 @@ class PlayerPresenter implements IPlayerPresenter {
         String jsonString = readJsonFile(inputStream);
         Gson gson = new Gson();
         MapModel.getInstance().setWesteros(gson.fromJson(jsonString, Map.class));
+        return true;
+    }
+
+    /**
+     * Gets the essos map from a local json file.
+     *
+     * @return the success boolean
+     */
+    private boolean getEssosMap() {
+        InputStream inputStream = mView.getContext().getResources().openRawResource(R.raw.essos_with_coordinates);
+        String jsonString = readJsonFile(inputStream);
+        Gson gson = new Gson();
+        MapModel.getInstance().setEssos(gson.fromJson(jsonString, Map.class));
         return true;
     }
 
