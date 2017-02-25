@@ -2,6 +2,7 @@ package fr.goui.riskgameofthroneshelperv2;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 
 import java.util.Set;
 
@@ -64,5 +65,41 @@ public class Utils {
             counter++;
         }
         return colors;
+    }
+
+    /**
+     * Checks if provided point is in provided polygon.
+     *
+     * @param p       the specific point
+     * @param polygon the specific polygon
+     * @return true if point in is polygon, false otherwise
+     */
+    public static boolean isPointInPolygon(Point p, Point[] polygon) {
+        double minX = polygon[0].x;
+        double maxX = polygon[0].x;
+        double minY = polygon[0].y;
+        double maxY = polygon[0].y;
+        for (int i = 1; i < polygon.length; i++) {
+            Point q = polygon[i];
+            minX = Math.min(q.x, minX);
+            maxX = Math.max(q.x, maxX);
+            minY = Math.min(q.y, minY);
+            maxY = Math.max(q.y, maxY);
+        }
+
+        if (p.x < minX || p.x > maxX || p.y < minY || p.y > maxY) {
+            return false;
+        }
+
+        // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+        boolean inside = false;
+        for (int i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+            if ((polygon[i].y > p.y) != (polygon[j].y > p.y) &&
+                    p.x < (polygon[j].x - polygon[i].x) * (p.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x) {
+                inside = !inside;
+            }
+        }
+
+        return inside;
     }
 }
