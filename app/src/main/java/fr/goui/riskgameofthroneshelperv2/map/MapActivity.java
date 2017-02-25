@@ -1,9 +1,13 @@
 package fr.goui.riskgameofthroneshelperv2.map;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +39,31 @@ public class MapActivity extends AppCompatActivity {
             playerTroopsTextView.setBackgroundColor(player.getColor());
             mPlayersLayout.addView(playerTroopsTextView);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_map, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_end) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.End_game_qm)
+                    .setMessage(R.string.End_game_caution)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int wich) {
+                            // TODO end game
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
