@@ -2,10 +2,8 @@ package fr.goui.riskgameofthroneshelperv2.map;
 
 import com.android.colorpicker.ColorPickerSwatch;
 
-import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.Utils;
 import fr.goui.riskgameofthroneshelperv2.listener.OnChangePlayerListener;
-import fr.goui.riskgameofthroneshelperv2.model.MapModel;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
@@ -50,11 +48,21 @@ class MapPresenter implements IMapPresenter, OnChangePlayerListener {
                 // adding this territory to the new player
                 mPlayerModel.findPlayerByColor(color).getTerritories().add(territory);
                 // recomputing the troops
-                mPlayerModel.computeTroopsForPlayers();
+                mPlayerModel.computeNumberOfTroopsForPlayers();
                 // refreshing the map and the troops counters
                 mView.refreshMapView();
                 mView.refreshTroopsCounters();
             }
         });
+    }
+
+    @Override
+    public void endGame() {
+        // disabling the map view
+        mView.disableMapView();
+        // compute end game points
+        mPlayerModel.computeEndGamePoints();
+        // refreshing the troops counters
+        mView.refreshTroopsCounters();
     }
 }

@@ -70,7 +70,7 @@ public class MapActivity extends AppCompatActivity implements IMapView {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_end) {
             new AlertDialog.Builder(this)
@@ -79,7 +79,10 @@ public class MapActivity extends AppCompatActivity implements IMapView {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int wich) {
-                            // TODO end game
+                            // hiding the end game action button
+                            item.setVisible(false);
+                            // ending game
+                            mPresenter.endGame();
                         }
                     })
                     .setNegativeButton("Cancel", null)
@@ -131,6 +134,11 @@ public class MapActivity extends AppCompatActivity implements IMapView {
         for (int i = 0; i < mNumberOfPlayers; i++) {
             mTroopsCounters[i].setText(String.valueOf(mPlayerModel.getPlayers().get(i).getNumberOfTroops()));
         }
+    }
+
+    @Override
+    public void disableMapView() {
+        mMapView.disable();
     }
 
     @Override

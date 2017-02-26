@@ -55,6 +55,7 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
     private boolean mIsClicked;
     private Territory mClickedTerritory;
     private OnChangePlayerListener mChangePlayerListener;
+    private boolean mIsDisabled;
 
     public MapView(Context context) {
         super(context);
@@ -224,7 +225,9 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
             }
         } else if (mNameTagRect.contains(mTouchedPoint.x, mTouchedPoint.y)) {
             // user clicked on the name tag of the territory
-            mChangePlayerListener.onChangePlayer(mClickedTerritory);
+            if (!mIsDisabled) {
+                mChangePlayerListener.onChangePlayer(mClickedTerritory);
+            }
             mIsClicked = false;
             invalidate();
         } else {
@@ -242,5 +245,13 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
      */
     public void setOnChangePlayerListener(OnChangePlayerListener changePlayerListener) {
         mChangePlayerListener = changePlayerListener;
+    }
+
+    /**
+     * Disables the view.
+     */
+    public void disable() {
+        mIsDisabled = true;
+        invalidate();
     }
 }

@@ -27,4 +27,9 @@ interface IMapView extends IView {
      * Refreshes the troops counters.
      */
     void refreshTroopsCounters();
+
+    /**
+     * Disables the map view.
+     */
+    void disableMapView();
 }

@@ -126,7 +126,7 @@ public class PlayerModel extends Observable {
     /**
      * Calculates the number of troops for all the players.
      */
-    public void computeTroopsForPlayers() {
+    public void computeNumberOfTroopsForPlayers() {
         for (Player player : players) {
             int troops = player.getTerritories().size();
             for (Territory territory : player.getTerritories()) {
@@ -135,5 +135,19 @@ public class PlayerModel extends Observable {
             player.setNumberOfTroops(Math.max(troops / MIN_TROOPS, MIN_TROOPS));
         }
         // TODO region bonus points
+    }
+
+    /**
+     * Calculates the end game points for each player.
+     */
+    public void computeEndGamePoints() {
+        for (Player player : players) {
+            int troops = player.getTerritories().size();
+            for (Territory territory : player.getTerritories()) {
+                troops += territory.getCastle();
+                troops += territory.getPort();
+            }
+            player.setNumberOfTroops(troops);
+        }
     }
 }
