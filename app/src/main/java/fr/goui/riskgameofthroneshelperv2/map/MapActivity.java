@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,8 +28,8 @@ public class MapActivity extends AppCompatActivity implements IMapView {
     @BindView(R.id.players_layout)
     LinearLayout mPlayersLayout;
 
-    @BindView(R.id.map_view)
-    MapView mMapView;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
 
     private MapPresenter mPresenter;
 
@@ -36,7 +37,9 @@ public class MapActivity extends AppCompatActivity implements IMapView {
 
     private TextView[] mTroopsCounters;
 
-    int mNumberOfPlayers;
+    private int mNumberOfPlayers;
+
+    private MapViewPagerAdapter mMapViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,9 @@ public class MapActivity extends AppCompatActivity implements IMapView {
         // setting up the presenter
         mPresenter = new MapPresenter();
         mPresenter.attachView(this);
-        // providing listener to the map view
-        mMapView.setOnChangePlayerListener(mPresenter);
+        // setting adapter to the view pager, providing listener to the map view
+        mMapViewPagerAdapter = new MapViewPagerAdapter(this, mPresenter);
+        mViewPager.setAdapter(mMapViewPagerAdapter);
     }
 
     @Override
@@ -126,7 +130,7 @@ public class MapActivity extends AppCompatActivity implements IMapView {
 
     @Override
     public void refreshMapView() {
-        mMapView.invalidate();
+        mMapViewPagerAdapter.refreshViews();
     }
 
     @Override
@@ -138,7 +142,7 @@ public class MapActivity extends AppCompatActivity implements IMapView {
 
     @Override
     public void disableMapView() {
-        mMapView.disable();
+        mMapViewPagerAdapter.disable();
     }
 
     @Override

@@ -11,11 +11,13 @@ public class MapModel {
 
     private static MapModel instance;
 
+    private Map[] maps;
+
+    private int numberOfMaps;
+
     private Map westeros;
 
     private Map essos;
-
-    private Map currentMap;
 
     private MapModel() {
     }
@@ -43,30 +45,59 @@ public class MapModel {
         this.essos = essos;
     }
 
-    public Map getCurrentMap() {
-        return currentMap;
+    public Map[] getMaps() {
+        return maps;
     }
 
-    public void setCurrentMap(MapId mapId) {
+    /**
+     * Sets which map players are on.
+     *
+     * @param mapId the map id
+     */
+    public void setMaps(MapId mapId) {
         switch (mapId) {
             case ESSOS:
-                currentMap = essos;
+                numberOfMaps = 1;
+                maps = new Map[numberOfMaps];
+                maps[0] = essos;
                 break;
             case WESTEROS:
-                currentMap = westeros;
+                numberOfMaps = 1;
+                maps = new Map[numberOfMaps];
+                maps[0] = westeros;
                 break;
             case WESTEROS_ESSOS:
-//                currentMap = westeros + essos; TODO
+                numberOfMaps = 2;
+                maps = new Map[numberOfMaps];
+                maps[0] = westeros;
+                maps[1] = essos;
                 break;
         }
     }
 
+    /**
+     * Returns how many maps there are.
+     *
+     * @return the number of maps.
+     */
+    public int getNumberOfMaps() {
+        return numberOfMaps;
+    }
+
+    /**
+     * Gets the territory that has the specified name.
+     *
+     * @param name the name of the searched territory
+     * @return the territory with the right name, null if non existent
+     */
     public Territory getTerritoryByName(String name) {
         Territory territory = null;
-        for (Region region : currentMap.getRegions()) {
-            for (Territory currentTerritory : region.getTerritories()) {
-                if (currentTerritory.getName().equals(name)) {
-                    territory = currentTerritory;
+        for (Map map : maps) {
+            for (Region region : map.getRegions()) {
+                for (Territory currentTerritory : region.getTerritories()) {
+                    if (currentTerritory.getName().equals(name)) {
+                        territory = currentTerritory;
+                    }
                 }
             }
         }

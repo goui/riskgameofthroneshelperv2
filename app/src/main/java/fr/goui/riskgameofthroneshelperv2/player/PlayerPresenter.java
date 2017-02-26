@@ -103,11 +103,11 @@ class PlayerPresenter implements IPlayerPresenter {
 
     private void setCurrentMap() {
         if (mNumberOfPlayers == MIN_PLAYERS) {
-            MapModel.getInstance().setCurrentMap(MapModel.MapId.ESSOS);
+            MapModel.getInstance().setMaps(MapModel.MapId.ESSOS);
         } else if (mNumberOfPlayers > MIN_PLAYERS && mNumberOfPlayers <= (MAX_PLAYERS - MIN_PLAYERS)) {
-            MapModel.getInstance().setCurrentMap(MapModel.MapId.WESTEROS);
+            MapModel.getInstance().setMaps(MapModel.MapId.WESTEROS);
         } else {
-            MapModel.getInstance().setCurrentMap(MapModel.MapId.WESTEROS_ESSOS);
+            MapModel.getInstance().setMaps(MapModel.MapId.WESTEROS_ESSOS);
         }
     }
 

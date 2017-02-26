@@ -144,13 +144,14 @@ public class PlayerModel extends Observable {
     }
 
     private int computeRegionBonus(Player player) {
-        Map currentMap = MapModel.getInstance().getCurrentMap();
         int regionBonus = 0;
-        for (Region region : currentMap.getRegions()) {
-            int color = isRegionControlled(region);
-            // if region is controlled by this player, giving him the bonus
-            if (player.getColor() == color) {
-                regionBonus += region.getBonus();
+        for (Map currentMap : MapModel.getInstance().getMaps()) {
+            for (Region region : currentMap.getRegions()) {
+                int color = isRegionControlled(region);
+                // if region is controlled by this player, giving him the bonus
+                if (player.getColor() == color) {
+                    regionBonus += region.getBonus();
+                }
             }
         }
         return regionBonus;

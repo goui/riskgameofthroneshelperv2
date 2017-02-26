@@ -23,7 +23,7 @@ import fr.goui.riskgameofthroneshelperv2.model.Territory;
 /**
  * Custom view displaying a map.
  */
-public class MapView extends View { // TODO rotate 90 essos and add view pager when 6 or 7 players
+public class MapView extends View {
 
     private static final int TOUCH_CIRCLE_RADIUS = 3;
     private static final int NAME_TAG_RECT_OFFSET = 48;
@@ -73,9 +73,6 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
      * @param context the context
      */
     private void init(Context context) {
-        mMap = MapModel.getInstance().getCurrentMap();
-        mMapWidth = mMap.getWidth();
-        mMapHeight = mMap.getHeight();
         mGreyPaint = new Paint();
         mGreyPaint.setColor(ContextCompat.getColor(context, android.R.color.darker_gray));
         mGreyPaint.setStrokeWidth(BORDER_STROKE_WIDTH);
@@ -95,6 +92,17 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
         mNameTagRect = new Rect();
     }
 
+    /**
+     * Sets the position of this view, or which map it represents.
+     *
+     * @param position the position in the array of maps
+     */
+    public void setPosition(int position) {
+        mMap = MapModel.getInstance().getMaps()[position];
+        mMapWidth = mMap.getWidth();
+        mMapHeight = mMap.getHeight();
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -110,7 +118,7 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas); // TODO don't do this every draw
+        super.onDraw(canvas);
         // drawing all the territories
         for (Region region : mMap.getRegions()) {
             for (int i = 0; i < region.getTerritories().size(); i++) {
@@ -134,7 +142,7 @@ public class MapView extends View { // TODO rotate 90 essos and add view pager w
                 // drawing the border
                 canvas.drawPath(mPath, mGreyPaint);
                 // saving the path
-                mGrid.put(coords, territory);
+                mGrid.put(coords, territory); // TODO don't do this every draw
             }
         }
         // if a territory has been clicked, drawing its name tag
