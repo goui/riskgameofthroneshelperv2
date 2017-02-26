@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.colorpicker.ColorPickerDialog;
+import com.android.colorpicker.ColorPickerSwatch;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +22,7 @@ import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements IMapView {
 
     @BindView(R.id.players_layout)
     LinearLayout mPlayersLayout;
@@ -26,19 +30,37 @@ public class MapActivity extends AppCompatActivity {
     @BindView(R.id.map_view)
     MapView mMapView;
 
+    private MapPresenter mPresenter;
+
+    private PlayerModel mPlayerModel;
+
+    private TextView[] mTroopsCounters;
+
+    int mNumberOfPlayers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
-
-        for (Player player : PlayerModel.getInstance().getPlayers()) {
+        mPlayerModel = PlayerModel.getInstance();
+        // adding the troops count bottom view
+        mNumberOfPlayers = mPlayerModel.getPlayers().size();
+        mTroopsCounters = new TextView[mNumberOfPlayers];
+        for (int i = 0; i < mNumberOfPlayers; i++) {
+            Player player = mPlayerModel.getPlayers().get(i);
             TextView playerTroopsTextView = (TextView) getLayoutInflater().inflate(R.layout.player_troops_text_view, null);
             playerTroopsTextView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
-            playerTroopsTextView.setText("" + 5); // TODO troops here
+            playerTroopsTextView.setText(String.valueOf(player.getNumberOfTroops()));
             playerTroopsTextView.setBackgroundColor(player.getColor());
             mPlayersLayout.addView(playerTroopsTextView);
+            mTroopsCounters[i] = playerTroopsTextView;
         }
+        // setting up the presenter
+        mPresenter = new MapPresenter();
+        mPresenter.attachView(this);
+        // providing listener to the map view
+        mMapView.setOnChangePlayerListener(mPresenter);
     }
 
     @Override
@@ -64,6 +86,58 @@ public class MapActivity extends AppCompatActivity {
                     .show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void openColorPicker(int[] colors, int selectedColor, ColorPickerSwatch.OnColorSelectedListener colorSelectListener) {
+        ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
+        colorPickerDialog.initialize(
+                R.string.Select_player,
+                colors,
+                selectedColor,
+                colors.length / 2,
+                colors.length);
+        colorPickerDialog.setOnColorSelectedListener(colorSelectListener);
+        colorPickerDialog.show(getFragmentManager(), null);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void showProgressBar() {
+        // do nothing
+    }
+
+    @Override
+    public void hideProgressBar() {
+        // do nothing
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void refreshMapView() {
+        mMapView.invalidate();
+    }
+
+    @Override
+    public void refreshTroopsCounters() {
+        for (int i = 0; i < mNumberOfPlayers; i++) {
+            mTroopsCounters[i].setText(String.valueOf(mPlayerModel.getPlayers().get(i).getNumberOfTroops()));
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.detachView();
+        mPresenter = null;
+        super.onDestroy();
     }
 
     /**

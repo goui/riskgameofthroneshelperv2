@@ -14,6 +14,7 @@ import android.view.View;
 import java.util.HashMap;
 
 import fr.goui.riskgameofthroneshelperv2.Utils;
+import fr.goui.riskgameofthroneshelperv2.listener.OnChangePlayerListener;
 import fr.goui.riskgameofthroneshelperv2.model.Map;
 import fr.goui.riskgameofthroneshelperv2.model.MapModel;
 import fr.goui.riskgameofthroneshelperv2.model.Region;
@@ -22,7 +23,7 @@ import fr.goui.riskgameofthroneshelperv2.model.Territory;
 /**
  * Custom view displaying a map.
  */
-public class MapView extends View {
+public class MapView extends View { // TODO rotate 90 essos and add view pager when 6 or 7 players
 
     private static final int TOUCH_CIRCLE_RADIUS = 3;
     private static final int NAME_TAG_RECT_OFFSET = 48;
@@ -53,6 +54,7 @@ public class MapView extends View {
     private boolean mIsTouched;
     private boolean mIsClicked;
     private Territory mClickedTerritory;
+    private OnChangePlayerListener mChangePlayerListener;
 
     public MapView(Context context) {
         super(context);
@@ -222,7 +224,7 @@ public class MapView extends View {
             }
         } else if (mNameTagRect.contains(mTouchedPoint.x, mTouchedPoint.y)) {
             // user clicked on the name tag of the territory
-            // TODO open color picker to change territory color
+            mChangePlayerListener.onChangePlayer(mClickedTerritory);
             mIsClicked = false;
             invalidate();
         } else {
@@ -231,5 +233,14 @@ public class MapView extends View {
             invalidate();
             onClick();
         }
+    }
+
+    /**
+     * Sets the change player listener
+     *
+     * @param changePlayerListener the change player listener
+     */
+    public void setOnChangePlayerListener(OnChangePlayerListener changePlayerListener) {
+        mChangePlayerListener = changePlayerListener;
     }
 }

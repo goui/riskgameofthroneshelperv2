@@ -27,6 +27,7 @@ import fr.goui.riskgameofthroneshelperv2.R;
 import fr.goui.riskgameofthroneshelperv2.adapter.TerritoryAdapter;
 import fr.goui.riskgameofthroneshelperv2.map.MapActivity;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
+import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 
 /**
  * View for the qrcode scanning and territories adding.
@@ -106,7 +107,7 @@ public class QRCodeActivity extends AppCompatActivity implements IQRCodeView {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int which) {
-                            // TODO count troops
+                            PlayerModel.getInstance().computeTroopsForPlayers();
                             startActivity(MapActivity.getStartingIntent(QRCodeActivity.this));
                         }
                     })

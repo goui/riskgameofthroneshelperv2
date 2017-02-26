@@ -8,6 +8,8 @@ import java.util.Set;
 
 import fr.goui.riskgameofthroneshelperv2.Utils;
 
+import static fr.goui.riskgameofthroneshelperv2.Utils.MIN_TROOPS;
+
 /**
  * Singleton class managing players.
  */
@@ -119,5 +121,19 @@ public class PlayerModel extends Observable {
             }
         }
         return player;
+    }
+
+    /**
+     * Calculates the number of troops for all the players.
+     */
+    public void computeTroopsForPlayers() {
+        for (Player player : players) {
+            int troops = player.getTerritories().size();
+            for (Territory territory : player.getTerritories()) {
+                troops += territory.getCastle();
+            }
+            player.setNumberOfTroops(Math.max(troops / MIN_TROOPS, MIN_TROOPS));
+        }
+        // TODO region bonus points
     }
 }

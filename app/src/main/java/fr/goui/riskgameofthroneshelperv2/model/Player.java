@@ -15,6 +15,8 @@ public class Player {
 
     private List<Territory> territories;
 
+    private int numberOfTroops;
+
     public Player() {
         territories = new ArrayList<>();
     }
@@ -33,5 +35,13 @@ public class Player {
 
     public void setTerritories(List<Territory> territories) {
         this.territories = territories;
+    }
+
+    public int getNumberOfTroops() {
+        return numberOfTroops;
+    }
+
+    public void setNumberOfTroops(int numberOfTroops) {
+        this.numberOfTroops = numberOfTroops;
     }
 }

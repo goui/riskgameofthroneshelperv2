@@ -9,7 +9,6 @@ interface IQRCodePresenter extends IPresenter<IQRCodeView> {
 
     /**
      * Triggered when the action bar button is clicked.
-     * Will open the color picker to change the current player.
      */
     void onPlayerSelectClick();
 
