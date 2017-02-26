@@ -15,7 +15,7 @@ public class Territory {
 
     private List<Coordinates> coordinates;
 
-    private int color;
+    private int color = -1;
 
     public Territory(String name) {
         this.name = name;

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import fr.goui.riskgameofthroneshelperv2.Utils;
 
+import static fr.goui.riskgameofthroneshelperv2.Utils.INVALID;
 import static fr.goui.riskgameofthroneshelperv2.Utils.MIN_TROOPS;
 
 /**
@@ -130,11 +131,50 @@ public class PlayerModel extends Observable {
         for (Player player : players) {
             int troops = player.getTerritories().size();
             for (Territory territory : player.getTerritories()) {
+                // a territory with a castle is worth the double
                 troops += territory.getCastle();
             }
-            player.setNumberOfTroops(Math.max(troops / MIN_TROOPS, MIN_TROOPS));
+            // region bonus
+            player.setRegionBonus(computeRegionBonus(player));
+            // game algorithm for troops depending on territory control
+            troops = Math.max(troops / MIN_TROOPS, MIN_TROOPS);
+            troops += player.getRegionBonus();
+            player.setNumberOfTroops(troops);
         }
-        // TODO region bonus points
+    }
+
+    private int computeRegionBonus(Player player) {
+        Map currentMap = MapModel.getInstance().getCurrentMap();
+        int regionBonus = 0;
+        for (Region region : currentMap.getRegions()) {
+            int color = isRegionControlled(region);
+            // if region is controlled by this player, giving him the bonus
+            if (player.getColor() == color) {
+                regionBonus += region.getBonus();
+            }
+        }
+        return regionBonus;
+    }
+
+    /**
+     * Checks if region is controlled.
+     *
+     * @param region the region
+     * @return the color of the region if controlled, -1 otherwise
+     */
+    private int isRegionControlled(Region region) {
+        // getting the color of the first territory
+        int color = region.getTerritories().get(0).getColor();
+        boolean controlled = true;
+        for (int i = 1; i < region.getTerritories().size(); i++) {
+            Territory territory = region.getTerritories().get(i);
+            // if just one of the territories has a different color, the region is not controlled
+            if (territory.getColor() != color) {
+                controlled = false;
+                break;
+            }
+        }
+        return controlled ? color : INVALID;
     }
 
     /**

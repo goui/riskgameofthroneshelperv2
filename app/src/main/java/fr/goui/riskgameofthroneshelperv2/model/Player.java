@@ -11,11 +11,13 @@ public class Player {
     /**
      * Android color resource id.
      */
-    private int color;
+    private int color = -1;
 
     private List<Territory> territories;
 
     private int numberOfTroops;
+
+    private int regionBonus;
 
     public Player() {
         territories = new ArrayList<>();
@@ -43,5 +45,13 @@ public class Player {
 
     public void setNumberOfTroops(int numberOfTroops) {
         this.numberOfTroops = numberOfTroops;
+    }
+
+    public int getRegionBonus() {
+        return regionBonus;
+    }
+
+    public void setRegionBonus(int regionBonus) {
+        this.regionBonus = regionBonus;
     }
 }

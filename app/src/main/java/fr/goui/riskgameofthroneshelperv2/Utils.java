@@ -14,6 +14,7 @@ public class Utils {
     public static final int MIN_PLAYERS = 2;
     public static final int MAX_PLAYERS = 7;
     public static final int MIN_TROOPS = 3;
+    public static final int INVALID = -1;
 
     private int[] colors;
 
