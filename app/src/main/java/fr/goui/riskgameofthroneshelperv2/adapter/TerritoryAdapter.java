@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
@@ -24,11 +21,10 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
 
     private LayoutInflater mLayoutInflater;
 
-    private List<Territory> mListOfTerritories;
+    private Player mPlayer;
 
     public TerritoryAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
-        mListOfTerritories = new ArrayList<>();
     }
 
     @Override
@@ -38,13 +34,13 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
 
     @Override
     public void onBindViewHolder(TerritoryAdapter.TerritoryViewHolder holder, int position) {
-        final Territory territory = mListOfTerritories.get(position);
+        final Territory territory = mPlayer.getTerritories().get(position);
         if (territory != null) {
             holder.nameTextView.setText(territory.getName());
             holder.discardButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListOfTerritories.remove(territory);
+                    mPlayer.getTerritories().remove(territory);
                     notifyDataSetChanged();
                 }
             });
@@ -52,13 +48,13 @@ public class TerritoryAdapter extends RecyclerView.Adapter<TerritoryAdapter.Terr
     }
 
     public void setPlayer(Player player) {
-        mListOfTerritories = player.getTerritories();
+        mPlayer = player;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mListOfTerritories.size();
+        return mPlayer.getTerritories().size();
     }
 
     static class TerritoryViewHolder extends RecyclerView.ViewHolder {

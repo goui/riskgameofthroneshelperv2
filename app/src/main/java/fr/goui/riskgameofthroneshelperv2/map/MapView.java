@@ -30,6 +30,9 @@ public class MapView extends View {
     private static final int NAME_TAG_TEXT_SIZE = 32;
     private static final int BORDER_STROKE_WIDTH = 2;
 
+    private int mViewWidth;
+    private int mViewHeight;
+
     /* GRAPHIC */
     private Paint mWhitePaint;
     private Paint mGreyPaint;
@@ -43,15 +46,13 @@ public class MapView extends View {
     private int mMapHeight;
     private float mRatioX;
     private float mRatioY;
+    private java.util.Map<Point[], Territory> mGrid;
 
     /* TOUCH */
     private Point mTouchedPoint;
     private boolean mIsTouched;
     private boolean mIsClicked;
     private Territory mClickedTerritory;
-
-    /* MAP GRID */
-    private java.util.Map<Point[], Territory> mGrid;
 
     public MapView(Context context) {
         super(context);
@@ -95,13 +96,13 @@ public class MapView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // getting width and height
-        int width = getMeasuredWidth();
-        int height = getMeasuredHeight();
+        mViewWidth = getMeasuredWidth();
+        mViewHeight = getMeasuredHeight();
         // getting ratio
-        mRatioX = (float) width / (float) mMapWidth;
-        mRatioY = (float) height / (float) mMapHeight;
+        mRatioX = (float) mViewWidth / (float) mMapWidth;
+        mRatioY = (float) mViewHeight / (float) mMapHeight;
         // adjusting view size
-        setMeasuredDimension(width, height);
+        setMeasuredDimension(mViewWidth, mViewHeight);
     }
 
     @Override
@@ -150,23 +151,35 @@ public class MapView extends View {
         // drawing the touch circle
         canvas.drawCircle(mTouchedPoint.x, mTouchedPoint.y, TOUCH_CIRCLE_RADIUS, mGreyPaint);
         // drawing the offset line
-        canvas.drawLine(mTouchedPoint.x, mTouchedPoint.y,
-                mTouchedPoint.x + NAME_TAG_RECT_OFFSET,
-                mTouchedPoint.y - NAME_TAG_RECT_OFFSET,
-                mGreyPaint);
+        int x1 = mTouchedPoint.x > mViewWidth / 2 ? mTouchedPoint.x - NAME_TAG_RECT_OFFSET : mTouchedPoint.x + NAME_TAG_RECT_OFFSET;
+        int y1 = mTouchedPoint.y > mViewHeight / 2 ? mTouchedPoint.y - NAME_TAG_RECT_OFFSET : mTouchedPoint.y + NAME_TAG_RECT_OFFSET;
+        canvas.drawLine(mTouchedPoint.x, mTouchedPoint.y, x1, y1, mGreyPaint);
         // setting the name tag rect
-        mNameTagRect.set(mTouchedPoint.x + NAME_TAG_RECT_OFFSET,
-                mTouchedPoint.y - 2 * NAME_TAG_RECT_OFFSET,
-                mTouchedPoint.x + 2 * NAME_TAG_PADDING + NAME_TAG_RECT_OFFSET + textSize,
-                mTouchedPoint.y - NAME_TAG_RECT_OFFSET);
+        int left = mTouchedPoint.x > mViewWidth / 2 ?
+                mTouchedPoint.x - NAME_TAG_RECT_OFFSET - textSize - 2 * NAME_TAG_PADDING :
+                mTouchedPoint.x + NAME_TAG_RECT_OFFSET;
+        int top = mTouchedPoint.y > mViewHeight / 2 ?
+                mTouchedPoint.y - 2 * NAME_TAG_RECT_OFFSET :
+                mTouchedPoint.y + NAME_TAG_RECT_OFFSET;
+        int right = mTouchedPoint.x > mViewWidth / 2 ?
+                mTouchedPoint.x - NAME_TAG_RECT_OFFSET :
+                mTouchedPoint.x + NAME_TAG_RECT_OFFSET + textSize + 2 * NAME_TAG_PADDING;
+        int bottom = mTouchedPoint.y > mViewHeight / 2 ?
+                mTouchedPoint.y - NAME_TAG_RECT_OFFSET :
+                mTouchedPoint.y + 2 * NAME_TAG_RECT_OFFSET;
+        mNameTagRect.set(left, top, right, bottom);
         // drawing the name tag background
         canvas.drawRect(mNameTagRect, mWhitePaint);
         // drawing the name tag border
         canvas.drawRect(mNameTagRect, mGreyPaint);
         // drawing the name tag text
-        canvas.drawText(text, mTouchedPoint.x + NAME_TAG_RECT_OFFSET + NAME_TAG_PADDING,
-                mTouchedPoint.y - (NAME_TAG_RECT_OFFSET + NAME_TAG_PADDING),
-                mGreyPaint);
+        int textX = mTouchedPoint.x > mViewWidth / 2 ?
+                mTouchedPoint.x - NAME_TAG_RECT_OFFSET - textSize - NAME_TAG_PADDING :
+                mTouchedPoint.x + NAME_TAG_RECT_OFFSET + NAME_TAG_PADDING;
+        int textY = mTouchedPoint.y > mViewHeight / 2 ?
+                mTouchedPoint.y - NAME_TAG_RECT_OFFSET - NAME_TAG_PADDING :
+                mTouchedPoint.y + 2 * NAME_TAG_RECT_OFFSET - NAME_TAG_PADDING;
+        canvas.drawText(text, textX, textY, mGreyPaint);
     }
 
     @Override
