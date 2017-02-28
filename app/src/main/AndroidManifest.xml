@@ -19,7 +19,8 @@
             android:name=".qrcode.QRCodeActivity"
             android:label="@string/title_activity_qrcode"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".map.MapActivity"></activity>
+        <activity android:name=".map.MapActivity" />
+        <activity android:name=".chart.ChartActivity"></activity>
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 import fr.goui.riskgameofthroneshelperv2.model.Territory;
 
 /**
- * Presenter for the qrcode screen.
+ * Presenter for the map screen.
  */
 class MapPresenter implements IMapPresenter, OnChangePlayerListener {
 
@@ -48,21 +48,11 @@ class MapPresenter implements IMapPresenter, OnChangePlayerListener {
                 // adding this territory to the new player
                 mPlayerModel.findPlayerByColor(color).getTerritories().add(territory);
                 // recomputing the troops
-                mPlayerModel.computeNumberOfTroopsForPlayers();
+                mPlayerModel.compute();
                 // refreshing the map and the troops counters
                 mView.refreshMapView();
                 mView.refreshTroopsCounters();
             }
         });
-    }
-
-    @Override
-    public void endGame() {
-        // disabling the map view
-        mView.disableMapView();
-        // compute end game points
-        mPlayerModel.computeEndGamePoints();
-        // refreshing the troops counters
-        mView.refreshTroopsCounters();
     }
 }

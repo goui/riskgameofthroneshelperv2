@@ -6,9 +6,4 @@ import fr.goui.riskgameofthroneshelperv2.IPresenter;
  * Presenter interface for the map screen.
  */
 interface IMapPresenter extends IPresenter<IMapView> {
-
-    /**
-     * Ends the game.
-     */
-    void endGame();
 }

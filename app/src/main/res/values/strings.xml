@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Risk: Game of Thrones helper v2</string>
+    <string name="Castles">Castles</string>
     <string name="Continue_qm">Are you sure you want to continue?</string>
     <string name="Continue_caution">You won\'t be able to add a new player or change a player\'s color</string>
     <string name="End_game_qm">Are you sure you want to end the game?</string>
@@ -8,10 +9,13 @@
     <string name="Game_over">Game over</string>
     <string name="Next">Next</string>
     <string name="Number_of_players">Number of players</string>
+    <string name="Ports">Ports</string>
+    <string name="Scores">Scores</string>
     <string name="Select_player">Select player</string>
     <string name="Start">Start</string>
     <string name="Start_game_qm">Are you sure you want to start the game?</string>
     <string name="Start_game_caution">You\'ll still be able to change territories color on the next screen</string>
+    <string name="Total_points">Total points</string>
     <string name="Territory_not_found">Territory not found</string>
     <string name="title_activity_qrcode">QRCodeActivity</string>
 </resources>

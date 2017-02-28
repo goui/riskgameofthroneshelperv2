@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_end"
-        android:icon="@drawable/ic_done"
-        android:title="@string/Game_over"
+        android:id="@+id/action_scores"
+        android:icon="@drawable/ic_assessment"
+        android:title="@string/Scores"
         app:showAsAction="always" />
 </menu>

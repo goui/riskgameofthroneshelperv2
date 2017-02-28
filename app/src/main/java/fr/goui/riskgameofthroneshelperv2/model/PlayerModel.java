@@ -125,14 +125,26 @@ public class PlayerModel extends Observable {
     }
 
     /**
+     * Calculates the number of troops and the toal points for each player.
+     */
+    public void compute() {
+        computeNumberOfTroopsForPlayers();
+        computeTotalPoints();
+    }
+
+    /**
      * Calculates the number of troops for all the players.
      */
-    public void computeNumberOfTroopsForPlayers() {
+    private void computeNumberOfTroopsForPlayers() {
         for (Player player : players) {
             int troops = player.getTerritories().size();
+            player.setNumberOfCastles(0);
+            player.setNumberOfPorts(0);
             for (Territory territory : player.getTerritories()) {
                 // a territory with a castle is worth the double
                 troops += territory.getCastle();
+                player.setNumberOfCastles(player.getNumberOfCastles() + territory.getCastle());
+                player.setNumberOfPorts(player.getNumberOfPorts() + territory.getPort());
             }
             // region bonus
             player.setRegionBonus(computeRegionBonus(player));
@@ -181,14 +193,14 @@ public class PlayerModel extends Observable {
     /**
      * Calculates the end game points for each player.
      */
-    public void computeEndGamePoints() {
+    private void computeTotalPoints() {
         for (Player player : players) {
-            int troops = player.getTerritories().size();
+            int points = player.getTerritories().size();
             for (Territory territory : player.getTerritories()) {
-                troops += territory.getCastle();
-                troops += territory.getPort();
+                points += territory.getCastle();
+                points += territory.getPort();
             }
-            player.setNumberOfTroops(troops);
+            player.setTotalPoints(points);
         }
     }
 }

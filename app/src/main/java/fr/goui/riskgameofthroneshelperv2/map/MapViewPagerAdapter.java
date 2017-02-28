@@ -51,15 +51,6 @@ class MapViewPagerAdapter extends PagerAdapter {
     }
 
     /**
-     * Disables all the views.
-     */
-    void disable() {
-        for (MapView mapView : mMapViews) {
-            mapView.disable();
-        }
-    }
-
-    /**
      * Refreshes all the view.
      */
     void refreshViews() {

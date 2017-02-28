@@ -254,12 +254,4 @@ public class MapView extends View {
     public void setOnChangePlayerListener(OnChangePlayerListener changePlayerListener) {
         mChangePlayerListener = changePlayerListener;
     }
-
-    /**
-     * Disables the view.
-     */
-    public void disable() {
-        mIsDisabled = true;
-        invalidate();
-    }
 }

@@ -19,6 +19,12 @@ public class Player {
 
     private int regionBonus;
 
+    private int totalPoints;
+
+    private int numberOfCastles;
+
+    private int numberOfPorts;
+
     public Player() {
         territories = new ArrayList<>();
     }
@@ -53,5 +59,29 @@ public class Player {
 
     public void setRegionBonus(int regionBonus) {
         this.regionBonus = regionBonus;
+    }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
+
+    public int getNumberOfCastles() {
+        return numberOfCastles;
+    }
+
+    public void setNumberOfCastles(int numberOfCastles) {
+        this.numberOfCastles = numberOfCastles;
+    }
+
+    public int getNumberOfPorts() {
+        return numberOfPorts;
+    }
+
+    public void setNumberOfPorts(int numberOfPorts) {
+        this.numberOfPorts = numberOfPorts;
     }
 }

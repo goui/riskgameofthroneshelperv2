@@ -1,8 +1,6 @@
 package fr.goui.riskgameofthroneshelperv2.map;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +18,11 @@ import com.android.colorpicker.ColorPickerSwatch;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.goui.riskgameofthroneshelperv2.R;
+import fr.goui.riskgameofthroneshelperv2.chart.ChartActivity;
 import fr.goui.riskgameofthroneshelperv2.model.Player;
 import fr.goui.riskgameofthroneshelperv2.model.PlayerModel;
 
-public class MapActivity extends AppCompatActivity implements IMapView {
+public class MapActivity extends AppCompatActivity implements IMapView { // TODO handling configuration change
 
     @BindView(R.id.players_layout)
     LinearLayout mPlayersLayout;
@@ -76,21 +75,8 @@ public class MapActivity extends AppCompatActivity implements IMapView {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_end) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.End_game_qm)
-                    .setMessage(R.string.End_game_caution)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int wich) {
-                            // hiding the end game action button
-                            item.setVisible(false);
-                            // ending game
-                            mPresenter.endGame();
-                        }
-                    })
-                    .setNegativeButton("Cancel", null)
-                    .show();
+        if (id == R.id.action_scores) {
+            startActivity(ChartActivity.getStartingIntent(this));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -138,11 +124,6 @@ public class MapActivity extends AppCompatActivity implements IMapView {
         for (int i = 0; i < mNumberOfPlayers; i++) {
             mTroopsCounters[i].setText(String.valueOf(mPlayerModel.getPlayers().get(i).getNumberOfTroops()));
         }
-    }
-
-    @Override
-    public void disableMapView() {
-        mMapViewPagerAdapter.disable();
     }
 
     @Override

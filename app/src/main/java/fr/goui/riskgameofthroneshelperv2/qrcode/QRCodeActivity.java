@@ -107,7 +107,7 @@ public class QRCodeActivity extends AppCompatActivity implements IQRCodeView {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int which) {
-                            PlayerModel.getInstance().computeNumberOfTroopsForPlayers();
+                            PlayerModel.getInstance().compute();
                             startActivity(MapActivity.getStartingIntent(QRCodeActivity.this));
                         }
                     })
