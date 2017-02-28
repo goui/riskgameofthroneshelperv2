@@ -1,13 +1,12 @@
 # riskgameofthroneshelperv2
 New version of the count troops helper
 
-- QRCode reader:
+QRCode reader:
 Powered by ZXing https://github.com/zxing/zxing
 
-- QRCodes 
-They were generated with https://www.the-qrcode-generator.com/
+QRCodes were generated with https://www.the-qrcode-generator.com/
 
-- Custom view maps
+Custom view maps
 
-- Charts with total points, number of castles and number of ports.
+Charts with total points, number of castles and number of ports.
 Powered by MPAndroidChart https://github.com/PhilJay/MPAndroidChart
