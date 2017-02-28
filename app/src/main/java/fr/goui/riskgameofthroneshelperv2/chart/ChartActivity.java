@@ -83,12 +83,15 @@ public class ChartActivity extends AppCompatActivity {
      * Sets all the data for all the charts.
      */
     private void setData() {
+        PlayerModel playerModel = PlayerModel.getInstance();
+        int[] colors = new int[playerModel.getPlayers().size()];
         // filling entries
         mTotalPointsEntries = new ArrayList<>();
         mCastlesEntries = new ArrayList<>();
         mPortsEntries = new ArrayList<>();
-        for (int i = 0; i < PlayerModel.getInstance().getPlayers().size(); i++) {
-            Player player = PlayerModel.getInstance().getPlayers().get(i);
+        for (int i = 0; i < playerModel.getPlayers().size(); i++) {
+            Player player = playerModel.getPlayers().get(i);
+            colors[i] = player.getColor();
             mTotalPointsEntries.add(new BarEntry(i, player.getTotalPoints(), ""));
             mCastlesEntries.add(new BarEntry(i, player.getNumberOfCastles(), ""));
             mPortsEntries.add(new BarEntry(i, player.getNumberOfPorts(), ""));
@@ -102,7 +105,6 @@ public class ChartActivity extends AppCompatActivity {
             mChart.notifyDataSetChanged();
         } else {
             mBarDataSet = new BarDataSet(mTotalPointsEntries, "");
-            int[] colors = Utils.convertColorSet(PlayerModel.getInstance().getPickedColors());
             mBarDataSet.setColors(colors);
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
