@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Risk: Game of Thrones helper v2</string>
+    <string name="app_name">Risk: GoT Helper V2</string>
     <string name="Castles">Castles</string>
     <string name="Continue_qm">Are you sure you want to continue?</string>
     <string name="Continue_caution">You won\'t be able to add a new player or change a player\'s color</string>
